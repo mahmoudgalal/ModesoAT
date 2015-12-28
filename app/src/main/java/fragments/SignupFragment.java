@@ -31,11 +31,13 @@ import java.util.Date;
  */
 public class SignupFragment extends Fragment {
 
-    private EditText userTxt,emailTxt,passwordTxt,jobPositionTxt,rfidTxt;
+    private EditText firstNameTxt,secondNameTxt,userTxt,emailTxt,passwordTxt,jobPositionTxt,rfidTxt;
     private Button signupBtn;
     public static  final String REG_DATE = "RegistrationDate";
     public static  final String USER_RFID_KEY = "RfidTag";
     public static  final String USER_POSITION_KEY = "Position";
+    public static  final String USER_FIRSTNAME_KEY = "First_Name";
+    public static  final String USER_SECONDNAME_KEY = "Second_Name";
     public static  final String USER_CHANNEL_KEY = "Channel";
 
     public SignupFragment() {
@@ -48,6 +50,8 @@ public class SignupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root =  inflater.inflate(R.layout.fragment_signup, container, false);
+        firstNameTxt = (EditText) root.findViewById(R.id.firstname_txt);
+        secondNameTxt = (EditText) root.findViewById(R.id.secondname_txt);
         userTxt= (EditText) root.findViewById(R.id.user_txt);
         emailTxt= (EditText) root.findViewById(R.id.email_txt);
         passwordTxt= (EditText) root.findViewById(R.id.pass_txt);
@@ -64,13 +68,15 @@ public class SignupFragment extends Fragment {
     }
     private void signup()
     {
-
+        final String userFirstName = firstNameTxt.getText().toString().trim();
+        final String userSecondName = secondNameTxt.getText().toString().trim();
         final String userName = userTxt.getText().toString().trim();
         final String userEmail = emailTxt.getText().toString().trim();
         final String userPassword = passwordTxt.getText().toString().trim();
         final String userPosition = jobPositionTxt.getText().toString().trim();
         final String userRfid = rfidTxt.getText().toString().trim();
-        if(userName.length()<6 || userEmail.length() <8 || userPassword.length()<4 || userRfid.length()<4)
+        if(userName.length()<6 || userEmail.length() <8 || userPassword.length()<4 || userRfid.length()<4
+                || userFirstName.length()<2 || userSecondName.length()<2)
         {
             Toast.makeText(SignupFragment.this.getActivity(),"Enter Valid Data !!",Toast.LENGTH_LONG).show();
             return;
@@ -87,6 +93,8 @@ public class SignupFragment extends Fragment {
         user.put(REG_DATE, date);
         user.put(USER_POSITION_KEY,userPosition);
         user.put(USER_RFID_KEY,userRfid);
+        user.put(USER_FIRSTNAME_KEY,userFirstName);
+        user.put(USER_SECONDNAME_KEY,userSecondName);
         final String userChannel = userName;//+userRfid;
         user.put(USER_CHANNEL_KEY,userChannel);
 

@@ -31,14 +31,16 @@ public class MainActivity extends AppCompatActivity {
             if(lastLoginTime<0)
             {
                 String channel = (String) currentUser.get(SignupFragment.USER_CHANNEL_KEY);
-                Utils.unSubscribeParseChannel(channel,null);
+                if(channel != null)
+                    Utils.unSubscribeParseChannel(channel,null);
                 ParseUser.logOut();
                 loadFragment(Utils.Constants.LOGIN_FRAGMENT);
             }else {
                 long currentTime = new Date().getTime();
                 if((currentTime-lastLoginTime)>Utils.Constants.LOGOUT_PERIOD ) {
                     String channel = (String) currentUser.get(SignupFragment.USER_CHANNEL_KEY);
-                    Utils.unSubscribeParseChannel(channel,null);
+                    if(channel != null)
+                        Utils.unSubscribeParseChannel(channel,null);
                     ParseUser.logOut();
                     loadFragment(Utils.Constants.LOGIN_FRAGMENT);
                 }
