@@ -67,6 +67,11 @@ public class WelcomeFragment extends Fragment {
                     Log.i(TAG,"Starting logout, Navigating to Login Screen...");
                     mainActivity.loadFragment(Utils.Constants.LOGIN_FRAGMENT);
                 }
+                /*try {
+                    Utils.sendWOLPacket("98:90:96:C0:83:DC");
+                }catch (Exception e){
+                    e.printStackTrace();
+                }*/
             }
         });
         ParseUser currentUser = ParseUser.getCurrentUser();

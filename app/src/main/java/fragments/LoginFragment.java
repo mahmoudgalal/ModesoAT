@@ -47,7 +47,13 @@ public class LoginFragment extends Fragment {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 login();
+                /*try {
+                    Utils.sendWOLPacket("98:90:96:C0:83:DC");
+                }catch (Exception e){
+                    e.printStackTrace();
+                }*/
             }
         });
         return  root;

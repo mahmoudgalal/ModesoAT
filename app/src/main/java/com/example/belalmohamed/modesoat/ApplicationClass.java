@@ -18,7 +18,7 @@ public class ApplicationClass extends Application {
 
         Parse.initialize(this, "ucblrF3maptVHzVeB7aN8m3Nb1WtcknfXccvlvKE", "QJrIurABjfpB1TnRMuvPzVDpkmMobTXtYfV67Nz4");
 
-        ParsePush.subscribeInBackground("BELALMOHAMED", new SaveCallback() {
+        /*ParsePush.subscribeInBackground("BELALMOHAMED", new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
@@ -27,6 +27,6 @@ public class ApplicationClass extends Application {
                     Log.e("com.parse.push", "failed to subscribe for push", e);
                 }
             }
-        });
+        });*/
     }
 }

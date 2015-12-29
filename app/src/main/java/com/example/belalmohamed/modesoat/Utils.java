@@ -9,6 +9,10 @@ import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
 /**
  * Created by user on 24/12/2015.
  */
@@ -37,5 +41,62 @@ public class Utils {
         ParsePush.unsubscribeInBackground(channel, callback);
         else
             ParsePush.unsubscribeInBackground(channel);
+    }
+
+    /**
+     * Sends a WOL(Wakeup-On-Lan) packet to the user PC with the specified MAC address
+     * Note: the PC must be configured to support WOL
+     * @param macAddress user's pc mac address
+     */
+    public static void sendWOLPacket(final String macAddress)
+    {
+        final int PORT = 9;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String ipStr = "255.255.255.255";
+                byte[] macBytes = new byte[6];
+                String[] hex = macAddress.split("(\\:|\\-)");
+                if (hex.length != 6) {
+                    throw new IllegalArgumentException("Invalid MAC address.");
+                }
+                try {
+                    for (int i = 0; i < 6; i++) {
+                        macBytes[i] = (byte) Integer.parseInt(hex[i], 16);
+                    }
+                }
+                catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    throw new IllegalArgumentException("Invalid hex digit in MAC address.");
+                }
+
+
+                try {
+                    byte[] bytes = new byte[6 + 16 * macBytes.length];
+                    for (int i = 0; i < 6; i++) {
+                        bytes[i] = (byte) 0xff;
+                    }
+                    for (int i = 6; i < bytes.length; i += macBytes.length) {
+                        System.arraycopy(macBytes, 0, bytes, i, macBytes.length);
+                    }
+
+                    InetAddress address = InetAddress.getByName(ipStr);
+                    DatagramPacket packet = new DatagramPacket(bytes, bytes.length, address, PORT);
+                    DatagramSocket socket = new DatagramSocket();
+                    socket.send(packet);
+                    socket.close();
+
+                    System.out.println("Wake-on-LAN packet sent.");
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Failed to send Wake-on-LAN packet: + e");
+                    //System.exit(1);
+                }
+            }
+        });
+        t.start();
+
+
     }
 }
