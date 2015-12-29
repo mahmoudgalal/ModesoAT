@@ -19,6 +19,8 @@ public class ApplicationClass extends Application {
         Parse.initialize(this, "ucblrF3maptVHzVeB7aN8m3Nb1WtcknfXccvlvKE", "QJrIurABjfpB1TnRMuvPzVDpkmMobTXtYfV67Nz4");
 
         /*ParsePush.subscribeInBackground("BELALMOHAMED", new SaveCallback() {
+
+        ParsePush.subscribeInBackground("GENERAL", new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
